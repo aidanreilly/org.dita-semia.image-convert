@@ -8,8 +8,8 @@
 			<then>
 				
 				<taskdef name="rasterize" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
-				<!--AR: Where do I create the PDF rasterizer task?, Do I need to create a new PdfRasterizerTask.jar for pdf processing?  --> 
-				<taskdef name="rasterizepdf" classname="org.apache.tools.ant.taskdefs.optional.PdfRasterizerTask"/>
+				<!--AR: added rasterizepdf task  --> 
+				<taskdef name="rasterizepdf" classname="org.apache.pdfbox.tools.PDFToImage"/>
 				
 				<!-- default destination format: "png" -->
 				<if>
