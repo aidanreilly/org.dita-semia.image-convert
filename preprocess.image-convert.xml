@@ -8,6 +8,8 @@
 			<then>
 				
 				<taskdef name="rasterize" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
+				<!--AR: Where do I create the PDF rasterizer task?, Do I need to create a new PdfRasterizerTask.jar for pdf processing?  --> 
+				<taskdef name="rasterizepdf" classname="org.apache.tools.ant.taskdefs.optional.PdfRasterizerTask"/>
 				
 				<!-- default destination format: "png" -->
 				<if>
@@ -78,7 +80,49 @@
 						<echo message="(no svg files to be converted)"/>
 					</else>
 				</if>
+
+				<!--AR: Start PDF image processing -->
+				<loadfile property="pdf-imagelist" srcFile="${dita.temp.dir}/image.list">
+					<filterchain>
+						<linecontainsregexp casesensitive="no">
+							<regexp pattern="[.]pdf$"/>
+						</linecontainsregexp>
+					</filterchain>
+				</loadfile>
 				
+				<if>
+					<isset property="pdf-imagelist"/>
+					<then>
+						<for list="${pdf-imagelist}" delimiter="${line.separator}" param="src-filename">
+							<sequential>
+								<propertyregex override="yes" property="dst-filename" input="@{src-filename}" regexp="...$" replace="${dita-semia.image-convert.dest-format}"/>
+								<echo message="converting @{src-filename} to ${dst-filename}"/>
+								<rasterizepdf 
+										result	= "image/${dita-semia.image-convert.dest-format}" 
+										src		= "${output.dir}/@{src-filename}" 
+										dest	= "${output.dir}/${dst-filename}" 
+										dpi		= "${dita-semia.image-convert.dpi}"/>
+								<if>
+									<istrue value="${dita-semia.image-convert.delete-src}"/>
+									<then>
+										<delete file="${output.dir}/@{src-filename}" quiet="true"/>
+									</then>
+								</if>
+							</sequential>
+						</for>
+						<if>
+							<istrue value="${dita-semia.image-convert.delete-src}"/>
+							<then>
+								<echo message="deleted all source files."/>		
+							</then>
+						</if>
+					</then>
+					<else>
+						<echo message="(no pdf files to be converted)"/>
+					</else>
+				</if>
+				<!--AR: End pdf image processing -->
+
 			</then>
 			<else>
 				<echo message="skipped (needs to be activated by parameter dita-semia.image-convert.activate)"/>

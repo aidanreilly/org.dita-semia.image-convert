@@ -4,7 +4,13 @@
 	<taskdef resource="net/sf/antcontrib/antlib.xml">
 		<classpath>
 			<pathelement location="plugins/org.dita-semia.image-convert/lib/ant-contrib-1.0b3.jar"/>
+			<!--AR: Added pdfbox jars-->
+			<pathelement location="plugins/org.dita-semia.image-convert/lib/pdfbox-2.0.3.jar"/>
+			<pathelement location="plugins/org.dita-semia.image-convert/lib/fontbox-2.0.3.jar"/>
+			<pathelement location="plugins/org.dita-semia.image-convert/lib/xmpbox-2.0.3.jar"/>
+			<!--AR: end of pdfbox jars -->
 		</classpath>
+
 	</taskdef>
 	
 	<import file="preprocess.image-convert.xml"/>
