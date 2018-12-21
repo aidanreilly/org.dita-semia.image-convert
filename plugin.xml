@@ -6,10 +6,8 @@
 	<feature extension="dita.conductor.lib.import"		file="lib/RasterizerTask.jar"/>
 	<feature extension="dita.conductor.lib.import"		file="lib/batik-all-1.8.jar"/>
 	<feature extension="dita.conductor.lib.import"		file="lib/xml-apis-ext.jar"/>
-	<!--AR: added pdfbox jars -->
-	<feature extension="dita.conductor.lib.import"		file="lib/pdfbox-2.0.3.jar"/>
-	<feature extension="dita.conductor.lib.import"		file="lib/fontbox-2.0.3"/>
-	<feature extension="dita.conductor.lib.import"		file="lib/xmpbox-2.0.3.jar"/>	
+	<!--AR: added pdfbox jar -->
+	<feature extension="dita.conductor.lib.import"		file="lib/pdfbox-app-2.0.13.jar"/>
 	<!-- sample transtype: xhtml-png -->
 	<feature extension="dita.conductor.transtype.check" value="xhtml-png"/>
 	<feature extension="dita.transtype.print" 			value="xhtml-png"/>

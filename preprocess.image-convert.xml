@@ -8,9 +8,12 @@
 			<then>
 				
 				<taskdef name="rasterize" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
-				<!--AR: added rasterizepdf task  --> 
-				<taskdef name="rasterizepdf" classname="org.apache.pdfbox.tools.PDFToImage"/>
 				
+				<!--AR: added rasterizepdf java call  --> 
+				<target name="rasterizepdf">
+					<java jar="lib/pdfbox-app-2.0.13.jar" fork="true" failonerror="true"/>
+				</target>
+
 				<!-- default destination format: "png" -->
 				<if>
 					<not>
