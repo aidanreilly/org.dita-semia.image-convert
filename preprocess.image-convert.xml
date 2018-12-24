@@ -6,13 +6,9 @@
 		<if>
 			<istrue value="${dita-semia.image-convert.activate}"/>
 			<then>
-				
-				<taskdef name="rasterize" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
-				
-				<!--AR: added rasterizepdf java call  --> 
-				<target name="rasterizepdf">
-					<java jar="lib/pdfbox-app-2.0.13.jar" fork="true" failonerror="true"/>
-				</target>
+
+				<taskdef name="rasterize"
+					classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
 
 				<!-- default destination format: "png" -->
 				<if>
@@ -23,7 +19,7 @@
 						<property name="dita-semia.image-convert.dest-format" value="png"/>
 					</then>
 				</if>
-				
+
 				<!-- default dpi: 96" -->
 				<if>
 					<not>
@@ -33,7 +29,7 @@
 						<property name="dita-semia.image-convert.dpi" value="96"/>
 					</then>
 				</if>
-				
+
 				<!-- default delete-src: true" -->
 				<if>
 					<not>
@@ -43,7 +39,8 @@
 						<property name="dita-semia.image-convert.delete-src" value="true"/>
 					</then>
 				</if>
-				
+
+				<!-- convert svg images -->
 				<loadfile property="svg-imagelist" srcFile="${dita.temp.dir}/image.list">
 					<filterchain>
 						<linecontainsregexp casesensitive="no">
@@ -51,19 +48,21 @@
 						</linecontainsregexp>
 					</filterchain>
 				</loadfile>
-				
+
 				<if>
 					<isset property="svg-imagelist"/>
 					<then>
-						<for list="${svg-imagelist}" delimiter="${line.separator}" param="src-filename">
+						<for list="${svg-imagelist}" delimiter="${line.separator}"
+							param="src-filename">
 							<sequential>
-								<propertyregex override="yes" property="dst-filename" input="@{src-filename}" regexp="...$" replace="${dita-semia.image-convert.dest-format}"/>
+								<propertyregex override="yes" property="dst-filename"
+									input="@{src-filename}" regexp="...$"
+									replace="${dita-semia.image-convert.dest-format}"/>
 								<echo message="converting @{src-filename} to ${dst-filename}"/>
-								<rasterize 
-										result	= "image/${dita-semia.image-convert.dest-format}" 
-										src		= "${output.dir}/@{src-filename}" 
-										dest	= "${output.dir}/${dst-filename}" 
-										dpi		= "${dita-semia.image-convert.dpi}"/>
+								<rasterize result="image/${dita-semia.image-convert.dest-format}"
+									src="${output.dir}/@{src-filename}"
+									dest="${output.dir}/${dst-filename}"
+									dpi="${dita-semia.image-convert.dpi}"/>
 								<if>
 									<istrue value="${dita-semia.image-convert.delete-src}"/>
 									<then>
@@ -75,7 +74,7 @@
 						<if>
 							<istrue value="${dita-semia.image-convert.delete-src}"/>
 							<then>
-								<echo message="deleted all source files."/>		
+								<echo message="deleted all svg source files."/>
 							</then>
 						</if>
 					</then>
@@ -84,7 +83,8 @@
 					</else>
 				</if>
 
-				<!--AR: Start PDF image processing -->
+
+				<!-- convert pdf images -->
 				<loadfile property="pdf-imagelist" srcFile="${dita.temp.dir}/image.list">
 					<filterchain>
 						<linecontainsregexp casesensitive="no">
@@ -92,19 +92,25 @@
 						</linecontainsregexp>
 					</filterchain>
 				</loadfile>
-				
+
 				<if>
 					<isset property="pdf-imagelist"/>
 					<then>
-						<for list="${pdf-imagelist}" delimiter="${line.separator}" param="src-filename">
+						<for list="${pdf-imagelist}" delimiter="${line.separator}"
+							param="src-filename">
 							<sequential>
-								<propertyregex override="yes" property="dst-filename" input="@{src-filename}" regexp="...$" replace="${dita-semia.image-convert.dest-format}"/>
+								<propertyregex override="yes" property="dst-filename"
+									input="@{src-filename}" regexp="...$"
+									replace="${dita-semia.image-convert.dest-format}"/>
 								<echo message="converting @{src-filename} to ${dst-filename}"/>
-								<rasterizepdf 
-										result	= "image/${dita-semia.image-convert.dest-format}" 
-										src		= "${output.dir}/@{src-filename}" 
-										dest	= "${output.dir}/${dst-filename}" 
-										dpi		= "${dita-semia.image-convert.dpi}"/>
+                <!--AR: try this: https://stackoverflow.com/questions/1965055/pass-a-command-line-argument-to-jar-in-an-ant-script -->
+                <!--AR: https://pdfbox.apache.org/1.8/commandline.html#pdftoimage -->
+                    <java jar="pdfbox-app-2.0.13.jar" fork="true">
+                    	<arg value="-outputPrefix ${output.dir}/@{src-filename}"/>
+                    	<arg value="-imageType ${dita-semia.image-convert.dest-format}"/>
+                      <arg value="-dpi 96"/>
+                      <arg value="-page 1"/>
+                    </java>
 								<if>
 									<istrue value="${dita-semia.image-convert.delete-src}"/>
 									<then>
@@ -116,7 +122,7 @@
 						<if>
 							<istrue value="${dita-semia.image-convert.delete-src}"/>
 							<then>
-								<echo message="deleted all source files."/>		
+								<echo message="deleted all pdf source files."/>
 							</then>
 						</if>
 					</then>
@@ -124,11 +130,12 @@
 						<echo message="(no pdf files to be converted)"/>
 					</else>
 				</if>
-				<!--AR: End pdf image processing -->
 
 			</then>
 			<else>
-				<echo message="skipped (needs to be activated by parameter dita-semia.image-convert.activate)"/>
+				<echo
+					message="skipped (needs to be activated by parameter dita-semia.image-convert.activate)"
+				/>
 			</else>
 		</if>
 
