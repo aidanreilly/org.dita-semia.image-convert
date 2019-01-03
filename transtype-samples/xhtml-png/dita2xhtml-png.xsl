@@ -11,10 +11,5 @@
 	<xsl:template match="*[contains(@class, ' topic/image ')]/@href[matches(lower-case(.), '\.svg$')]">
 		<xsl:attribute name="src" select="replace(., '...$', 'png')"/>
 	</xsl:template>
-
-	<!--AR: change file extension from "pdf" to "png" -->
-	<xsl:template match="*[contains(@class, ' topic/image ')]/@href[matches(lower-case(.), '\.pdf$')]">
-		<xsl:attribute name="src" select="replace(., '...$', 'png')"/>
-	</xsl:template>
 	
 </xsl:stylesheet>
