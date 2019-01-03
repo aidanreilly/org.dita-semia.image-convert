@@ -2,7 +2,7 @@
 <project name="org.dita-semia.image-convert.png">
 	
 	<target name="dita2xhtml-png.init">
-		<property name="args.xsl" 							value="${dita.plugin.org.dita-semia.image-convert.dir}/transtype-samples/xhtml-png/dita2xhtml-png.xsl"/>
+		<property name="args.xsl" value="${dita.plugin.org.dita-semia.image-convert.dir}/transtype-samples/xhtml-png/dita2xhtml-png.xsl"/>
 		<property name="dita-semia.image-convert.activate" 	value="true"/>
 	</target>
 
