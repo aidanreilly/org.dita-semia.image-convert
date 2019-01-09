@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project version="18.1">
+<project version="20.1">
     <meta>
         <filters directoryPatterns="" filePatterns="dita-semia.image-convert.test" positiveFilePatterns="" showHiddenFiles="false"/>
         <options>
-            <serialized version="18.1" xml:space="preserve">
+            <serialized version="20.1" xml:space="preserve">
                 <serializableOrderedMap>
+                    <entry>
+                        <String>keys.context</String>
+                        <String>file:/C:/SVN/TC/Simplex/dita/0579834.ditamap</String>
+                    </entry>
                     <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>test/topic.dita</String>
+                                    <String>test/image-convert-test.ditamap</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -25,7 +29,7 @@
                             </scenarioAssociation>
                             <scenarioAssociation>
                                 <field name="url">
-                                    <String>test/image-convert-test.ditamap</String>
+                                    <String>test/topic.dita</String>
                                 </field>
                                 <field name="scenarioIds">
                                     <list>
@@ -106,6 +110,9 @@
                                     <null/>
                                 </field>
                                 <field name="webhelpResponsiveTemplate">
+                                    <null/>
+                                </field>
+                                <field name="publishingTemplateDataPO">
                                     <null/>
                                 </field>
                                 <field name="additionalAntArgs">
@@ -305,6 +312,9 @@
                                     <null/>
                                 </field>
                                 <field name="webhelpResponsiveTemplate">
+                                    <null/>
+                                </field>
+                                <field name="publishingTemplateDataPO">
                                     <null/>
                                 </field>
                                 <field name="additionalAntArgs">
