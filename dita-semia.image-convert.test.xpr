@@ -6,10 +6,6 @@
             <serialized version="20.1" xml:space="preserve">
                 <serializableOrderedMap>
                     <entry>
-                        <String>keys.context</String>
-                        <String>file:/C:/SVN/TC/Simplex/dita/0579834.ditamap</String>
-                    </entry>
-                    <entry>
                         <String>scenario.associations</String>
                         <scenarioAssociation-array>
                             <scenarioAssociation>

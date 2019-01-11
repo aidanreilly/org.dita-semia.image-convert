@@ -2,118 +2,133 @@
 <project>
     <target name="dita-semia.preprocess.image-convert">
         <if>
-            <istrue value="${dita-semia.image-convert.activate}" />
+            <istrue value="${dita-semia.image-convert.activate}"/>
             <then>
-                <taskdef name="rasterize" classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask" />
+                <taskdef name="rasterize"
+                    classname="org.apache.tools.ant.taskdefs.optional.RasterizerTask"/>
                 <!-- default destination format: "png" -->
                 <if>
                     <not>
-                        <isset property="dita-semia.image-convert.dest-format" />
+                        <isset property="dita-semia.image-convert.dest-format"/>
                     </not>
                     <then>
-                        <property name="dita-semia.image-convert.dest-format" value="png" />
+                        <property name="dita-semia.image-convert.dest-format" value="png"/>
                     </then>
                 </if>
                 <!-- default dpi: 96" -->
                 <if>
                     <not>
-                        <isset property="dita-semia.image-convert.dpi" />
+                        <isset property="dita-semia.image-convert.dpi"/>
                     </not>
                     <then>
-                        <property name="dita-semia.image-convert.dpi" value="96" />
+                        <property name="dita-semia.image-convert.dpi" value="96"/>
                     </then>
                 </if>
                 <!-- default delete-src: true" -->
                 <if>
                     <not>
-                        <isset property="dita-semia.image-convert.delete-src" />
+                        <isset property="dita-semia.image-convert.delete-src"/>
                     </not>
                     <then>
-                        <property name="dita-semia.image-convert.delete-src" value="true" />
+                        <property name="dita-semia.image-convert.delete-src" value="true"/>
                     </then>
                 </if>
                 <!-- convert svg images -->
                 <loadfile property="svg-imagelist" srcFile="${dita.temp.dir}/image.list">
                     <filterchain>
                         <linecontainsregexp casesensitive="no">
-                            <regexp pattern="[.]svg$" />
+                            <regexp pattern="[.]svg$"/>
                         </linecontainsregexp>
                     </filterchain>
                 </loadfile>
                 <if>
-                    <isset property="svg-imagelist" />
+                    <isset property="svg-imagelist"/>
                     <then>
-                        <for list="${svg-imagelist}" delimiter="${line.separator}" param="src-filename">
+                        <for list="${svg-imagelist}" delimiter="${line.separator}"
+                            param="src-filename">
                             <sequential>
-                                <propertyregex override="yes" property="dst-filename" input="@{src-filename}" regexp="...$" replace="${dita-semia.image-convert.dest-format}" />
-                                <echo message="converting @{src-filename} to ${dst-filename}" />
-                                <rasterize result="image/${dita-semia.image-convert.dest-format}" src="${output.dir}/@{src-filename}" dest="${output.dir}/${dst-filename}" dpi="${dita-semia.image-convert.dpi}" />
+                                <propertyregex override="yes" property="dst-filename"
+                                    input="@{src-filename}" regexp="...$"
+                                    replace="${dita-semia.image-convert.dest-format}"/>
+                                <echo message="converting @{src-filename} to ${dst-filename}"/>
+                                <rasterize result="image/${dita-semia.image-convert.dest-format}"
+                                    src="${output.dir}/@{src-filename}"
+                                    dest="${output.dir}/${dst-filename}"
+                                    dpi="${dita-semia.image-convert.dpi}"/>
                                 <if>
-                                    <istrue value="${dita-semia.image-convert.delete-src}" />
+                                    <istrue value="${dita-semia.image-convert.delete-src}"/>
                                     <then>
-                                        <delete file="${output.dir}/@{src-filename}" quiet="true" />
+                                        <delete file="${output.dir}/@{src-filename}" quiet="true"/>
                                     </then>
                                 </if>
                             </sequential>
                         </for>
                         <if>
-                            <istrue value="${dita-semia.image-convert.delete-src}" />
+                            <istrue value="${dita-semia.image-convert.delete-src}"/>
                             <then>
-                                <echo message="deleted all svg source files." />
+                                <echo message="deleted all svg source files."/>
                             </then>
                         </if>
                     </then>
                     <else>
-                        <echo message="(no svg files to be converted)" />
+                        <echo message="(no svg files to be converted)"/>
                     </else>
                 </if>
                 <!-- convert pdf images -->
                 <loadfile property="pdf-imagelist" srcFile="${dita.temp.dir}/image.list">
                     <filterchain>
                         <linecontainsregexp casesensitive="no">
-                            <regexp pattern="[.]pdf$" />
+                            <regexp pattern="[.]pdf$"/>
                         </linecontainsregexp>
                     </filterchain>
                 </loadfile>
                 <if>
-                    <isset property="pdf-imagelist" />
+                    <isset property="pdf-imagelist"/>
                     <then>
-                        <for list="${pdf-imagelist}" delimiter="${line.separator}" param="src-filename">
+                        <for list="${pdf-imagelist}" delimiter="${line.separator}"
+                            param="src-filename">
                             <sequential>
-                                <propertyregex override="yes" property="dst-filename" input="@{src-filename}" regexp="...$" replace="${dita-semia.image-convert.dest-format}" />
-                                <echo message="converting @{src-filename} to jpg" />
-                                <java classname="org.apache.pdfbox.tools.PDFToImage" fork="true" failonerror="true">
-                                    	<classpath>
-                                    		<pathelement location="lib/pdfbox-app-2.0.13.jar"/>
-                                    	</classpath>
-                                    	<arg value="${output.dir}/@{src-filename}"/>
-                                    	<arg value="-outputPrefix @{dst-filename}"/>
-                                    	<arg value="-imageType ${dita-semia.image-convert.dest-format}"/>
-                                    	<arg value="-dpi ${dita-semia.image-convert.dpi}"/>
-                                    	<arg value="-page 1"/>
-                                    </java>
+                                <propertyregex override="yes" property="dst-filename"
+                                    input="@{src-filename}" regexp="...$"
+                                    replace="${dita-semia.image-convert.dest-format}"/>
+                                <echo message="Converting @{src-filename} to ${dst-filename}. Note PDFBox adds a '1' suffix to the filename."/>
+                                <!-- https://pdfbox.apache.org/2.0/commandline.html#pdftoimage -->
+                                <java classname="org.apache.pdfbox.tools.PDFToImage" fork="true"
+                                    failonerror="true">
+                                    <classpath>
+                                        <pathelement location="lib/pdfbox-app-2.0.13.jar"/>
+                                    </classpath>
+                                    <arg value="${output.dir}/@{src-filename}"/>
+                                    <arg value="-page 1"/>
+                                    <arg value="-dpi"/>
+                                    <arg value="${dita-semia.image-convert.dpi}"/>
+                                    <arg value="-imageType"/>
+                                    <arg value="${dita-semia.image-convert.dest-format}"/>
+                                </java>
                                 <if>
-                                    <istrue value="${dita-semia.image-convert.delete-src}" />
+                                    <istrue value="${dita-semia.image-convert.delete-src}"/>
                                     <then>
-                                        <delete file="${output.dir}/@{src-filename}" quiet="true" />
+                                        <delete file="${output.dir}/@{src-filename}" quiet="true"/>
                                     </then>
                                 </if>
                             </sequential>
                         </for>
                         <if>
-                            <istrue value="${dita-semia.image-convert.delete-src}" />
+                            <istrue value="${dita-semia.image-convert.delete-src}"/>
                             <then>
-                                <echo message="deleted all pdf source files." />
+                                <echo message="deleted all pdf source files."/>
                             </then>
                         </if>
                     </then>
                     <else>
-                        <echo message="(no pdf files to be converted)" />
+                        <echo message="(no pdf files to be converted)"/>
                     </else>
                 </if>
             </then>
             <else>
-                <echo message="skipped (needs to be activated by parameter dita-semia.image-convert.activate)" />
+                <echo
+                    message="skipped (needs to be activated by parameter dita-semia.image-convert.activate)"
+                />
             </else>
         </if>
     </target>

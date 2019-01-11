@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
+<map>
+  <title>Image keys</title>
+  <keydef href="Figure-3.svg" keys="Figure-3" format="svg"/>
+  <keydef href="Figure-5.pdf" keys="Figure-5" format="pdf"/>
+</map>

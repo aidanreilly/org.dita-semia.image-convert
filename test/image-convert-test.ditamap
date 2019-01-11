@@ -4,5 +4,8 @@
     <booktitle>
         <mainbooktitle>Image-Convert Test</mainbooktitle>
     </booktitle>
-	<chapter href="topic.dita"/>
+    <frontmatter>
+        <mapref href="images-keys.ditamap"/>
+    </frontmatter>
+    <chapter href="topic.dita"/>
 </bookmap>

@@ -13,7 +13,7 @@
 		</fig>
 		<fig>
 			<title>3rd SVG</title>
-			<image href="Figure-3.svg" id="mly_jzc_gy"/>
+			<image keyref="Figure-3" id="mly_jzc_gy"/>
 		</fig>
 		<fig>
 			<title>1st PNG</title>
@@ -23,5 +23,9 @@
 			<title>1st PDF</title>
 			<image href="Figure-4.pdf" id="efd_wgw_2gb"/>
 		</fig>
+  	<fig id="wjb_vgw_2gb">
+  		<title>2st PDF</title>
+  		<image keyref="Figure-5" id="efd_wgy_2gb"/>
+  	</fig>
 	</body>
 </topic>
