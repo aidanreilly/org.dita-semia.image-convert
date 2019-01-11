@@ -2,6 +2,6 @@
 <!DOCTYPE map PUBLIC "-//OASIS//DTD DITA Map//EN" "map.dtd">
 <map>
   <title>Image keys</title>
-  <keydef href="Figure-3.svg" keys="Figure-3" format="svg"/>
-  <keydef href="Figure-5.pdf" keys="Figure-5" format="pdf"/>
+  <keydef href="Figure-3.svg" keys="Figure-3" format="image"/>
+  <keydef href="Figure-5.pdf" keys="Figure-5" format="image"/>
 </map>
