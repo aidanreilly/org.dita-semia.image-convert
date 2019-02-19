@@ -9,8 +9,6 @@
 		<xsl:attribute name="src" select="replace(., '...$', 'png')"/>
 	</xsl:template>
 
-	<!--AR: TODO: apply template match for map/href too-->
-
 	<!-- change file extension from ".pdf" to "...1.png". pdfbox renders pdf images with the page number in the extension, hence the '1.png' suffix. -->
 	<!-- http://www.xsltfunctions.com/xsl/fn_replace.html -->
 	<xsl:template match="*[contains(@class, ' topic/image ')]/@href[matches(lower-case(.), '\.pdf$')]">
