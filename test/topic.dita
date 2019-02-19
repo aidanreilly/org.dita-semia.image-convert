@@ -27,5 +27,17 @@
   		<title>2st PDF</title>
   		<image keyref="Figure-5" id="efd_wgy_2gb"/>
   	</fig>
+		<fig id="fig_zrz_w1q_tgb">
+			<title>whp test 1</title>
+			<image href="ato1532593244246.svg" id="image_ynz_x1q_tgb"/>
+		</fig>
+		<fig id="fig_ihf_z1q_tgb">
+			<title>whp test 2</title>
+			<image href="cxw1532593022316.svg" id="image_jhf_z1q_tgb"/>
+		</fig>
+		<fig id="fig_z3y_z1q_tgb">
+			<title>whp test 3</title>
+			<image href="czk1532593082664.svg" id="image_ajy_z1q_tgb"/>
+		</fig>
 	</body>
 </topic>
